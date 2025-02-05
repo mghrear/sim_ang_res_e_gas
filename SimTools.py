@@ -29,7 +29,7 @@ Rad_Lengths = {
 }
 
 
-MS_fitting_data = pd.read_pickle("/Users/majdghrear/Lab/ang_res_e_gas/simulation/fitting_MS_models/MS_fitting_results.pk")
+MS_fitting_data = pd.read_pickle("/Users/majdghrear/Lab/ang_res_e_gas/sim_ang_res_e_gas/fitting_MS_models/MS_fitting_results.pk")
 
 # Highland equation fit parameters as obtained from fit_models.ipynb
 highland_fit_params = {
@@ -203,6 +203,15 @@ def get_N_vs_x(track,time,dists):
 
 	return charge_counts
 
+# Used to make equal axis when plotting
+def axisEqual3D(ax):
+    extents = np.array([getattr(ax, 'get_{}lim'.format(dim))() for dim in 'xyz'])
+    sz = extents[:,1] - extents[:,0]
+    centers = np.mean(extents, axis=1)
+    maxsize = max(abs(sz))
+    r = maxsize/2
+    for ctr, dim in zip(centers, 'xyz'):
+        getattr(ax, 'set_{}lim'.format(dim))(ctr - r, ctr + r)
 
 
 # Gaussian fit function where only parameter is sigma
